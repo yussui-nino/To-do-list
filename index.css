@@ -33,11 +33,11 @@
 .finished div{
     color: #f8f8ff;
     margin-top: 40px;
-    margin-left: 65px;
-    margin-right: 65px;
+    margin-left: 50px;
+    margin-right: 50px;
     border: 7px #46a29f solid;
     border-radius: 4px;
-    width: 480px;
+    width: 455px;
     overflow: hidden;
     text-overflow: ellipsis; 
     word-wrap: break-word
@@ -95,3 +95,28 @@
     font-family: 'h1Font';
 }
 
+dialog{
+    border: 4px #0e1015 solid;
+    border-radius: 10px;
+    height: 150px;
+    padding: 50px;
+    background-color: #f8f8ff;
+    font-family: 'OthersFont';
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.5); /* Dim the background when the dialog is open */
+}
+
+dialog .SubmitInfos{
+    border-radius: 10px;
+    background-color: #0e1015;
+    font-size: 15px;
+}
+
+/* dialog[open] {
+    display: flex; 
+    flex-direction: column;
+    height: 650px;
+    width: 450px;
+} */

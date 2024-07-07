@@ -1,5 +1,6 @@
 function newProject(){
     let list = []
+    let DoneList = []
     
     function NewP(){
             dialog.showModal()
@@ -21,24 +22,40 @@ function newProject(){
         }
         list.push(myProject)
         console.log(list)
+        Save()
         display()
+       
 
     }
     function DelP(event){
         const number = event.target.getAttribute('data-id');
         list.splice(number, 1);
-        display();
+        
         console.log("Item deleted, new list is: " + list);
         i--;
         event.target.parentNode.remove();
+        Save()
+        display();
     }
-    return{NewP,DelP,SubP,list}
+    function SetCheckTrue(event){
+        const DoneProject = event.target.parentNode;
+        finished.appendChild(DoneProject);
+        const number = event.target.getAttribute('data-id');
+            list.splice(number, 1);
+            console.log("Item deleted, new list is: " + list);
+            Save()
+            display()
+    
+    }
+    
+    return{NewP,DelP,SubP,list,SetCheckTrue}
 }
 
 function alertList(){
     alert(projecto.list)
 }
 const projecto = new newProject()
+let listed = projecto.list
 
 let i = 0
 
@@ -60,7 +77,7 @@ function display(){
        const f = document.createElement('button')
        f.textContent = "Project done?";
        f.setAttribute('data-id', i);
-       f.addEventListener('click', SetCheckTrue);
+       f.addEventListener('click', projecto.SetCheckTrue);
 
        const g = document.createElement('button');
        g.textContent = "Delete Project";
@@ -142,6 +159,15 @@ FinishedProjects.appendChild(finH1)
 header.appendChild(CurrentProjects)
 header.appendChild(FinishedProjects)
 
+// const SaveP = document.createElement('button')
+// const SavePh1 = document.createElement('h1')
+
+// SavePh1.textContent = "Save Projects"
+
+// SaveP.appendChild(SavePh1)
+// SaveP.addEventListener('click', update)
+
+// header.appendChild(SaveP)
 // Main Part
 
 const MainPart = document.createElement('div')
@@ -152,19 +178,25 @@ container.appendChild(MainPart)
 const finished = document.createElement('div')
 finished.classList.add('finished')
 
-function SetCheckTrue(event){
-    const DoneProject = event.target.parentNode;
-    finished.appendChild(DoneProject);
-    i--;
-
-}
-
 document.body.appendChild(container)
 
 const SubmitButton = document.querySelector('.SubmitInfos')
 
 AddButton.addEventListener('click' , projecto.NewP)
 SubmitButton.addEventListener('click' , projecto.SubP)
+
+function Save(){
+    localStorage.setItem('projectList', JSON.stringify(projecto.list));
+}
+
+// Function to update list from localStorage
+function update(){
+    let savedList = JSON.parse(localStorage.getItem('projectList'));
+    projecto.list.push(...savedList)
+    display();
+    console.log(savedList) // Update UI after loading saved list
+}
+update()
 
 // const project1 = document.createElement('div')
 // const project2 = document.createElement('div')
